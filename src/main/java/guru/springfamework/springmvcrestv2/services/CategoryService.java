@@ -1,7 +1,6 @@
 package guru.springfamework.springmvcrestv2.services;
 
-import guru.springfamework.springmvcrestv2.api.v2.CategoryDTO;
-import guru.springfamework.springmvcrestv2.domain.Category;
+import guru.springfamework.springmvcrestv2.api.v1.CategoryDTO;
 
 import java.util.List;
 

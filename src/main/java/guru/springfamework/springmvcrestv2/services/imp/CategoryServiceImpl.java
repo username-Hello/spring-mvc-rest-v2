@@ -1,10 +1,9 @@
 package guru.springfamework.springmvcrestv2.services.imp;
 
-import guru.springfamework.springmvcrestv2.api.v2.CategoryDTO;
-import guru.springfamework.springmvcrestv2.api.v2.mapper.CategoryMapper;
+import guru.springfamework.springmvcrestv2.api.v1.CategoryDTO;
+import guru.springfamework.springmvcrestv2.api.v1.mapper.CategoryMapper;
 import guru.springfamework.springmvcrestv2.repositories.CategoryRepository;
 import guru.springfamework.springmvcrestv2.services.CategoryService;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

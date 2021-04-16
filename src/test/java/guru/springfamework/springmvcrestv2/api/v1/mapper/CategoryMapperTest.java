@@ -1,6 +1,6 @@
-package guru.springfamework.springmvcrestv2.api.v2.mapper;
+package guru.springfamework.springmvcrestv2.api.v1.mapper;
 
-import guru.springfamework.springmvcrestv2.api.v2.CategoryDTO;
+import guru.springfamework.springmvcrestv2.api.v1.CategoryDTO;
 import guru.springfamework.springmvcrestv2.domain.Category;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package guru.springfamework.springmvcrestv2.api.v2;
+package guru.springfamework.springmvcrestv2.api.v1;
 
 import lombok.Data;
 

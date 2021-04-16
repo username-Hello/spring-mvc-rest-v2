@@ -1,7 +1,7 @@
 package guru.springfamework.springmvcrestv2.services.imp;
 
-import guru.springfamework.springmvcrestv2.api.v2.CategoryDTO;
-import guru.springfamework.springmvcrestv2.api.v2.mapper.CategoryMapper;
+import guru.springfamework.springmvcrestv2.api.v1.CategoryDTO;
+import guru.springfamework.springmvcrestv2.api.v1.mapper.CategoryMapper;
 import guru.springfamework.springmvcrestv2.domain.Category;
 import guru.springfamework.springmvcrestv2.repositories.CategoryRepository;
 import guru.springfamework.springmvcrestv2.services.CategoryService;
