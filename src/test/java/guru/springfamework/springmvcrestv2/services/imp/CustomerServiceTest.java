@@ -6,6 +6,7 @@ import guru.springfamework.springmvcrestv2.domain.Customer;
 import guru.springfamework.springmvcrestv2.repositories.CustomerRepository;
 import guru.springfamework.springmvcrestv2.services.CustomerService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -72,5 +74,23 @@ public class CustomerServiceTest {
         assertEquals(FIRST_NAME, result.getFirstName());
         assertEquals(LAST_NAME, result.getLastName());
         assertEquals(CUSTOMER_URL, result.getCustomer_url());
+    }
+
+    @Test
+    public void updateCustomer() {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(FIRST_NAME);
+        customerDTO.setLastName(LAST_NAME);
+
+        Customer customer = new Customer(ID, FIRST_NAME, LAST_NAME);
+        when(customerRepository.save(any())).thenReturn(customer);
+
+        CustomerDTO result = customerService.updateCustomer(ID, customerDTO);
+        String[] resultCustomerUrl = result.getCustomer_url().split("/");
+        Long resultId = Long.parseLong(resultCustomerUrl[resultCustomerUrl.length - 1]);
+        assertEquals(FIRST_NAME, result.getFirstName());
+        assertEquals(LAST_NAME, result.getLastName());
+        assertEquals(CUSTOMER_URL, result.getCustomer_url());
+        assertEquals(ID, resultId);
     }
 }
