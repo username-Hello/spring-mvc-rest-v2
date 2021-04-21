@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_CUSTOMER_URL;
+
 @Service
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -24,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomer_url("/api/v1/customers/"  + customer.getId());
+                    customerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/"  + customer.getId());
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -35,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .map(customerDTO -> {
-                    customerDTO.setCustomer_url("/api/v1/customers/" + id);
+                    customerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/" + id);
                     return customerDTO;
                 })
                 .orElseThrow(RuntimeException::new); // TODO handle error
@@ -68,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDTO saveCustomer(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO savedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        savedCustomerDTO.setCustomer_url("/api/v1/customers/" + savedCustomer.getId());
+        savedCustomerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/" + savedCustomer.getId());
         return savedCustomerDTO;
     }
 

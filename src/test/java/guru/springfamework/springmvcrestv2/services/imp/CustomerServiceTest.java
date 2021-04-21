@@ -21,12 +21,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_CUSTOMER_URL;
+
 public class CustomerServiceTest {
 
     public static final String FIRST_NAME = "Test_FirstName";
     public static final String LAST_NAME = "Test_LastName";
     public static final Long ID = 1L;
-    public static final String CUSTOMER_URL = "/api/v1/customers/" + ID;
+    public static final String CUSTOMER_URL = BASE_CUSTOMER_URL + "/" + ID;
     @Mock
     CustomerRepository customerRepository;
 
