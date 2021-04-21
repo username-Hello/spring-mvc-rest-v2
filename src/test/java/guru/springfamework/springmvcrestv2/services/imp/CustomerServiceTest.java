@@ -6,7 +6,6 @@ import guru.springfamework.springmvcrestv2.domain.Customer;
 import guru.springfamework.springmvcrestv2.repositories.CustomerRepository;
 import guru.springfamework.springmvcrestv2.services.CustomerService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,10 +13,12 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CustomerServiceTest {
@@ -92,5 +93,11 @@ public class CustomerServiceTest {
         assertEquals(LAST_NAME, result.getLastName());
         assertEquals(CUSTOMER_URL, result.getCustomer_url());
         assertEquals(ID, resultId);
+    }
+
+    @Test
+    public void deleteCustomer() {
+        customerService.deleteCustomer(ID);
+        verify(customerRepository, times(1)).deleteById(anyLong());
     }
 }
