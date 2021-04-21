@@ -23,6 +23,7 @@ public class CustomerServiceTest {
     public static final String FIRST_NAME = "Test_FirstName";
     public static final String LAST_NAME = "Test_LastName";
     public static final Long ID = 1L;
+    public static final String CUSTOMER_URL = "/api/v1/customers/" + ID;
     @Mock
     CustomerRepository customerRepository;
 
@@ -56,5 +57,20 @@ public class CustomerServiceTest {
         CustomerDTO customerDTO = customerService.getCustomerById(ID);
         assertEquals(FIRST_NAME, customerDTO.getFirstName());
         assertEquals(LAST_NAME, customerDTO.getLastName());
+    }
+
+    @Test
+    public void createNewCustomer() {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(FIRST_NAME);
+        customerDTO.setLastName(LAST_NAME);
+
+        Customer customer = new Customer(ID, FIRST_NAME, LAST_NAME);
+        when(customerRepository.save(any())).thenReturn(customer);
+
+        CustomerDTO result = customerService.createCustomer(customerDTO);
+        assertEquals(FIRST_NAME, result.getFirstName());
+        assertEquals(LAST_NAME, result.getLastName());
+        assertEquals(CUSTOMER_URL, result.getCustomer_url());
     }
 }
