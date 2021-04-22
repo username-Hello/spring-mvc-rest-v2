@@ -3,6 +3,7 @@ package guru.springfamework.springmvcrestv2.services.imp;
 import guru.springfamework.springmvcrestv2.api.v1.CustomerDTO;
 import guru.springfamework.springmvcrestv2.api.v1.mapper.CustomerMapper;
 import guru.springfamework.springmvcrestv2.domain.Customer;
+import guru.springfamework.springmvcrestv2.exception.ResourceNotFoundException;
 import guru.springfamework.springmvcrestv2.repositories.CustomerRepository;
 import guru.springfamework.springmvcrestv2.services.CustomerService;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
                     customerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/" + id);
                     return customerDTO;
                 })
-                .orElseThrow(RuntimeException::new); // TODO handle error
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -57,14 +58,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
-        Customer originalCustomer = customerRepository.getOne(id);
-        if (customerDTO.getFirstName() != null) {
-            originalCustomer.setFirstName(customerDTO.getFirstName());
-        }
-        if (customerDTO.getLastName() != null) {
-            originalCustomer.setLastName(customerDTO.getLastName());
-        }
-        return saveCustomer(originalCustomer);
+        return customerRepository.findById(id).map(originalCustomer -> {
+            if (customerDTO.getFirstName() != null) {
+                originalCustomer.setFirstName(customerDTO.getFirstName());
+            }
+            if (customerDTO.getLastName() != null) {
+                originalCustomer.setLastName(customerDTO.getLastName());
+            }
+            return saveCustomer(originalCustomer);
+        }).orElseThrow(ResourceNotFoundException::new);
+
     }
 
     private CustomerDTO saveCustomer(Customer customer) {
