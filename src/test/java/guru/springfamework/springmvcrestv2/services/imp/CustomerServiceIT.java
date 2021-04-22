@@ -6,6 +6,7 @@ import guru.springfamework.springmvcrestv2.bootstrap.Bootstrap;
 import guru.springfamework.springmvcrestv2.domain.Customer;
 import guru.springfamework.springmvcrestv2.repositories.CategoryRepository;
 import guru.springfamework.springmvcrestv2.repositories.CustomerRepository;
+import guru.springfamework.springmvcrestv2.repositories.VendorRepository;
 import guru.springfamework.springmvcrestv2.services.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,11 +31,14 @@ public class CustomerServiceIT {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
 
     @Before
-    public void setUp() throws Exception {
-        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+    public void setUp() {
+        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
         bootstrap.run();
         customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
     }
