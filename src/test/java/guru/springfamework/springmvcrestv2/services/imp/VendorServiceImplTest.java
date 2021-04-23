@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class VendorServiceImplTest {
@@ -90,5 +92,11 @@ public class VendorServiceImplTest {
         assertNotNull(result);
         assertEquals(BASE_VENDOR_URL + "/" + givenId, result.getUrl());
         assertEquals(TEST_NAME, result.getName());
+    }
+
+    @Test
+    public void deleteById() {
+        vendorService.deleteById(ID);
+        verify(vendorRepository, times(1)).deleteById(anyLong());
     }
 }
