@@ -16,7 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_VENDOR_URL;
+import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImplTest.ID;
+import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImplTest.TEST_NAME;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,5 +53,18 @@ public class VendorControllerTest {
         mockMvc.perform(get(BASE_VENDOR_URL).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendors", hasSize(2)));
+    }
+
+    @Test
+    public void getVendor() throws Exception {
+        VendorDTO vendorDTO = new VendorDTO();
+        vendorDTO.setName(TEST_NAME);
+        vendorDTO.setUrl(BASE_VENDOR_URL + "/" + ID);
+        when(vendorService.getById(anyLong())).thenReturn(vendorDTO);
+
+        mockMvc.perform(get(BASE_VENDOR_URL + "/" + ID).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", equalTo(vendorDTO.getName())))
+                .andExpect(jsonPath("$.vendor_url", equalTo(vendorDTO.getUrl())));
     }
 }

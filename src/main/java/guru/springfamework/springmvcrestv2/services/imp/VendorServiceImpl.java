@@ -2,6 +2,7 @@ package guru.springfamework.springmvcrestv2.services.imp;
 
 import guru.springfamework.springmvcrestv2.api.v1.VendorDTO;
 import guru.springfamework.springmvcrestv2.api.v1.mapper.VendorMapper;
+import guru.springfamework.springmvcrestv2.exception.ResourceNotFoundException;
 import guru.springfamework.springmvcrestv2.repositories.VendorRepository;
 import guru.springfamework.springmvcrestv2.services.VendorService;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,14 @@ public class VendorServiceImpl implements VendorService {
                     vendorDTO.setUrl(BASE_VENDOR_URL + "/" + vendor.getId());
                     return vendorDTO;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public VendorDTO getById(Long id) {
+        return vendorRepository.findById(id).map(vendor -> {
+            VendorDTO vendorDTO = vendorMapper.vendorToVendorDTO(vendor);
+            vendorDTO.setUrl(BASE_VENDOR_URL + "/" + vendor.getId());
+            return vendorDTO;
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 }
