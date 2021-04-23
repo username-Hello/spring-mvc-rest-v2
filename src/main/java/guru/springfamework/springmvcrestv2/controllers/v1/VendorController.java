@@ -6,6 +6,7 @@ import guru.springfamework.springmvcrestv2.services.VendorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_VENDOR_URL;
 
 @RestController
@@ -44,5 +46,11 @@ public class VendorController {
     @ResponseStatus(HttpStatus.OK)
     public VendorDTO updateVendor(@PathVariable String id, @RequestBody VendorDTO vendorDTO) {
         return vendorService.update(Long.parseLong(id), vendorDTO);
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public VendorDTO patchVendor(@PathVariable String id, @RequestBody VendorDTO vendorDTO) {
+        return vendorService.patch(Long.parseLong(id), vendorDTO);
     }
 }

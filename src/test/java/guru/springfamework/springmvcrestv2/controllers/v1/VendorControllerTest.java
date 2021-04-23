@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_VENDOR_URL;
+import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceIT.UPDATED_NAME;
 import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImplTest.ID;
 import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImplTest.TEST_NAME;
 import static org.hamcrest.Matchers.equalTo;
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -108,5 +110,25 @@ public class VendorControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendor_url", equalTo(returnedVendor.getUrl())))
                 .andExpect(jsonPath("$.name", equalTo(returnedVendor.getName())));
+    }
+
+    @Test
+    public void patchVendor() throws Exception {
+        Long givenId = ID;
+        VendorDTO givenVendor = new VendorDTO();
+        givenVendor.setName(UPDATED_NAME);
+
+        VendorDTO patchedVendor = new VendorDTO();
+        patchedVendor.setName(givenVendor.getName());
+        patchedVendor.setUrl(BASE_VENDOR_URL + "/" + givenId);
+
+        when(vendorService.patch(anyLong(), any())).thenReturn(patchedVendor);
+
+        mockMvc.perform(patch(BASE_VENDOR_URL + "/" + givenId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(givenVendor)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.vendor_url", equalTo(patchedVendor.getUrl())))
+                .andExpect(jsonPath("$.name", equalTo(patchedVendor.getName())));
     }
 }
