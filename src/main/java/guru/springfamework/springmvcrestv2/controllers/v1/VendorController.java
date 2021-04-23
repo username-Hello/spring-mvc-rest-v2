@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,5 +38,11 @@ public class VendorController {
     @ResponseStatus(HttpStatus.CREATED)
     private VendorDTO createNewVendor(@RequestBody VendorDTO vendorDTO) {
         return vendorService.createNewOne(vendorDTO);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public VendorDTO updateVendor(@PathVariable String id, @RequestBody VendorDTO vendorDTO) {
+        return vendorService.update(Long.parseLong(id), vendorDTO);
     }
 }

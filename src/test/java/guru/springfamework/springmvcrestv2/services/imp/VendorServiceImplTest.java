@@ -67,12 +67,28 @@ public class VendorServiceImplTest {
     public void createNewOne() {
         VendorDTO givenVendor = new VendorDTO();
         givenVendor.setName(TEST_NAME);
+
         Vendor returnedVendor = new Vendor(ID, givenVendor.getName());
         when(vendorRepository.save(any())).thenReturn(returnedVendor);
 
         VendorDTO result = vendorService.createNewOne(givenVendor);
         assertNotNull(result);
         assertEquals(BASE_VENDOR_URL + "/" + returnedVendor.getId(), result.getUrl());
+        assertEquals(TEST_NAME, result.getName());
+    }
+
+    @Test
+    public void update() {
+        Long givenId = ID;
+        VendorDTO givenVendor = new VendorDTO();
+        givenVendor.setName(TEST_NAME);
+
+        Vendor returnedVendor = new Vendor(givenId, givenVendor.getName());
+        when(vendorRepository.save(any())).thenReturn(returnedVendor);
+
+        VendorDTO result = vendorService.update(givenId, givenVendor);
+        assertNotNull(result);
+        assertEquals(BASE_VENDOR_URL + "/" + givenId, result.getUrl());
         assertEquals(TEST_NAME, result.getName());
     }
 }
