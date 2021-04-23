@@ -9,4 +9,6 @@ public interface VendorService {
     List<VendorDTO> getAll();
 
     VendorDTO getById(Long id);
+
+    VendorDTO createNewOne(VendorDTO vendorDTO);
 }

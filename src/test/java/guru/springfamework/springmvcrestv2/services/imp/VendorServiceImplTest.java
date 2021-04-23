@@ -18,6 +18,7 @@ import java.util.Optional;
 import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_VENDOR_URL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -60,5 +61,18 @@ public class VendorServiceImplTest {
     public void getByWrongId() {
         when(vendorRepository.findById(anyLong())).thenReturn(Optional.empty());
         vendorService.getById(ID);
+    }
+
+    @Test
+    public void createNewOne() {
+        VendorDTO givenVendor = new VendorDTO();
+        givenVendor.setName(TEST_NAME);
+        Vendor returnedVendor = new Vendor(ID, givenVendor.getName());
+        when(vendorRepository.save(any())).thenReturn(returnedVendor);
+
+        VendorDTO result = vendorService.createNewOne(givenVendor);
+        assertNotNull(result);
+        assertEquals(BASE_VENDOR_URL + "/" + returnedVendor.getId(), result.getUrl());
+        assertEquals(TEST_NAME, result.getName());
     }
 }

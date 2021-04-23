@@ -20,14 +20,16 @@ import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImpl
 import static guru.springfamework.springmvcrestv2.services.imp.VendorServiceImplTest.TEST_NAME;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
-public class VendorControllerTest {
+public class VendorControllerTest extends AbstractRestControllerTest {
 
     @Mock
     VendorService vendorService;
@@ -66,5 +68,24 @@ public class VendorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO.getName())))
                 .andExpect(jsonPath("$.vendor_url", equalTo(vendorDTO.getUrl())));
+    }
+
+    @Test
+    public void createNewVendor() throws Exception {
+        VendorDTO givenVendor = new VendorDTO();
+        givenVendor.setName(TEST_NAME);
+
+        VendorDTO returnedVendor = new VendorDTO();
+        returnedVendor.setName(givenVendor.getName());
+        returnedVendor.setUrl(BASE_VENDOR_URL + "/" + ID);
+
+        when(vendorService.createNewOne(any())).thenReturn(returnedVendor);
+
+        mockMvc.perform(post(BASE_VENDOR_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(givenVendor)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.vendor_url", equalTo(returnedVendor.getUrl())))
+                .andExpect(jsonPath("$.name", equalTo(returnedVendor.getName())));
     }
 }
