@@ -1,6 +1,5 @@
 package guru.springfamework.springmvcrestv2.config;
 
-import com.sun.deploy.ui.AppInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -12,7 +11,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
-import java.util.List;
 
 @EnableSwagger2
 @Configuration

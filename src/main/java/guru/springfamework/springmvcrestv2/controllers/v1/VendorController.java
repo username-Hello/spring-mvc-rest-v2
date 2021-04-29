@@ -28,7 +28,7 @@ public class VendorController {
 
     private final VendorService vendorService;
 
-    @GetMapping( "/")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get list of all vendors", notes = "If there's no vendors returns empty list")
     private VendorListDTO getListOfVendors() {
