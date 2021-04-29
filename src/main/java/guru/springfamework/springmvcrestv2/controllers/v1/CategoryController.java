@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(description = "this is my controller")
+
 @RestController
 @RequestMapping("/api/v1/categories/")
+@Api(tags = {"Category"})
 public class CategoryController {
 
     private final CategoryService categoryService;

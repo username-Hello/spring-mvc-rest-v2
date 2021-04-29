@@ -3,6 +3,7 @@ package guru.springfamework.springmvcrestv2.controllers.v1;
 import guru.springfamework.springmvcrestv2.api.v1.CustomerDTO;
 import guru.springfamework.springmvcrestv2.api.v1.CustomerListDTO;
 import guru.springfamework.springmvcrestv2.services.CustomerService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static guru.springfamework.springmvcrestv2.constants.CoreConstants.BASE_CUSTOMER_URL;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(BASE_CUSTOMER_URL)
+@Api(tags = {"Customer"})
 public class CustomerController {
 
     public final CustomerService customerService;
