@@ -1,7 +1,9 @@
 package guru.springframework.springmvcrestv2.controllers.v1;
 
-import guru.springframework.springmvcrestv2.api.v1.CustomerDTO;
-import guru.springframework.springmvcrestv2.api.v1.CustomerListDTO;
+
+import guru.springframework.model.CustomerDTO;
+
+import guru.springframework.model.CustomerListDTO;
 import guru.springframework.springmvcrestv2.services.CustomerService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -31,7 +33,9 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getListOfCustomers() {
-        return new CustomerListDTO(customerService.getAllCustomers());
+        CustomerListDTO customersList = new CustomerListDTO();
+        customersList.getCustomers().addAll(customerService.getAllCustomers());
+        return customersList;
     }
 
     @GetMapping("/{id}")

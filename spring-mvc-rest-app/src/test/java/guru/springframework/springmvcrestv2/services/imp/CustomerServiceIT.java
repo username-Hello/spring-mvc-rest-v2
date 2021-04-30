@@ -1,6 +1,6 @@
 package guru.springframework.springmvcrestv2.services.imp;
 
-import guru.springframework.springmvcrestv2.api.v1.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.springmvcrestv2.api.v1.mapper.CustomerMapper;
 import guru.springframework.springmvcrestv2.bootstrap.Bootstrap;
 import guru.springframework.springmvcrestv2.domain.Customer;
@@ -57,7 +57,7 @@ public class CustomerServiceIT {
         CustomerDTO result = customerService.patchCustomer(id, givenCustomer);
         assertEquals(UPDATED_FIRST_NAME, result.getFirstName());
         assertEquals(originalLastName, result.getLastName());
-        assertEquals("/api/v1/customers/" + id, result.getCustomer_url());
+        assertEquals("/api/v1/customers/" + id, result.getCustomerUrl());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class CustomerServiceIT {
         CustomerDTO result = customerService.patchCustomer(id, givenCustomer);
         assertEquals(UPDATED_LAST_NAME, result.getLastName());
         assertEquals(originalFirstName, result.getFirstName());
-        assertEquals("/api/v1/customers/" + id, result.getCustomer_url());
+        assertEquals("/api/v1/customers/" + id, result.getCustomerUrl());
     }
 
     private Long findId() {

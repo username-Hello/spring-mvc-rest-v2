@@ -1,6 +1,7 @@
 package guru.springframework.springmvcrestv2.services.imp;
 
-import guru.springframework.springmvcrestv2.api.v1.CustomerDTO;
+
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.springmvcrestv2.api.v1.mapper.CustomerMapper;
 import guru.springframework.springmvcrestv2.domain.Customer;
 import guru.springframework.springmvcrestv2.repositories.CustomerRepository;
@@ -76,7 +77,7 @@ public class CustomerServiceTest {
         CustomerDTO result = customerService.createCustomer(customerDTO);
         assertEquals(FIRST_NAME, result.getFirstName());
         assertEquals(LAST_NAME, result.getLastName());
-        assertEquals(CUSTOMER_URL, result.getCustomer_url());
+        assertEquals(CUSTOMER_URL, result.getCustomerUrl());
     }
 
     @Test
@@ -89,11 +90,11 @@ public class CustomerServiceTest {
         when(customerRepository.save(any())).thenReturn(customer);
 
         CustomerDTO result = customerService.updateCustomer(ID, customerDTO);
-        String[] resultCustomerUrl = result.getCustomer_url().split("/");
+        String[] resultCustomerUrl = result.getCustomerUrl().split("/");
         Long resultId = Long.parseLong(resultCustomerUrl[resultCustomerUrl.length - 1]);
         assertEquals(FIRST_NAME, result.getFirstName());
         assertEquals(LAST_NAME, result.getLastName());
-        assertEquals(CUSTOMER_URL, result.getCustomer_url());
+        assertEquals(CUSTOMER_URL, result.getCustomerUrl());
         assertEquals(ID, resultId);
     }
 

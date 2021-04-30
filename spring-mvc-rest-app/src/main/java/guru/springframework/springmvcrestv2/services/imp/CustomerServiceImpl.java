@@ -1,6 +1,7 @@
 package guru.springframework.springmvcrestv2.services.imp;
 
-import guru.springframework.springmvcrestv2.api.v1.CustomerDTO;
+
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.springmvcrestv2.api.v1.mapper.CustomerMapper;
 import guru.springframework.springmvcrestv2.domain.Customer;
 import guru.springframework.springmvcrestv2.exception.ResourceNotFoundException;
@@ -27,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/"  + customer.getId());
+                    customerDTO.setCustomerUrl(BASE_CUSTOMER_URL + "/"  + customer.getId());
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -38,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .map(customerDTO -> {
-                    customerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/" + id);
+                    customerDTO.setCustomerUrl(BASE_CUSTOMER_URL + "/" + id);
                     return customerDTO;
                 })
                 .orElseThrow(ResourceNotFoundException::new);
@@ -73,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDTO saveCustomer(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO savedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        savedCustomerDTO.setCustomer_url(BASE_CUSTOMER_URL + "/" + savedCustomer.getId());
+        savedCustomerDTO.setCustomerUrl(BASE_CUSTOMER_URL + "/" + savedCustomer.getId());
         return savedCustomerDTO;
     }
 
